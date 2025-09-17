@@ -1,7 +1,9 @@
 import time
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from PageObjects.base_page import BasePage
 from Utilities.data_generator import generate_random_name, generate_random_mobile
+from selenium.webdriver.support.ui import Select
 
 
 class Appointmentpage(BasePage):
@@ -12,11 +14,7 @@ class Appointmentpage(BasePage):
     gender = (By.XPATH, '//*[@id="add-patient-modal"]/div[2]/div[2]/div[1]/div[2]/div/button[1]')
     age = (By.XPATH, "//input[@placeholder='Age' and @min = '0']")
     add_create_bill = (By.XPATH, '//*[@id="add-patient-modal"]/div[3]/div/div[2]/button[1]/div')
-    select_service = (By.XPATH, '//*[@id="serviceNames_chosen"]/a/span')
-    service_selection = (By.XPATH, '//*[@id="serviceNames_chosen"]/div/ul/li[2]')
     add_button = (By.XPATH, "//button[@id='bpAddServiceButton']")
-    doctor_list = (By.XPATH, '//select[@id="dictorList"]')
-    doctor_name = (By.XPATH, '//*[@id="dictorList"]/option[9]')
     con_button = (By.XPATH, "//button[@onclick='addConsultService()']")
     create_bill = (By.XPATH, "//button[@id='saveServices']")
     pay_bill = (By.XPATH, "//button[@id='allBillBtn']")
@@ -33,6 +31,30 @@ class Appointmentpage(BasePage):
     patient_search = (By.XPATH, "//input[@data-qa='testid_patientSearch']")
     search_result = (By.XPATH, '//*[@id="searchResult"]/div[2]/div[2]/div[1]')
 
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.select_service_dropdown = (By.XPATH, '//*[@id="serviceNames_chosen"]/a/span')
+        #Dynamic locator for selecting a service by its name
+        self.service_option_by_name = (By.XPATH, '//*[@id="serviceNames_chosen"]/div/ul/li[text()="{}"]')
+        self.doctor_list_select = (By.XPATH, '//select[@id="dictorList"]')
+
+    def select_service_by_name(self, service_name):
+        print(f"Opening the service dropdown to select '{service_name}'...")
+        self.click(self.select_service_dropdown)
+        # Format the dynamic locator with the desired service name
+        specific_service_locator = (self.service_option_by_name[0], self.service_option_by_name[1].format(service_name))
+        print(f"'{service_name}', selected successfully")
+        self.click(specific_service_locator)
+        print(f"'{service_name}', select successfully")
+
+    def select_doctor_by_name(self, doctor_name):
+        print(f"Finding the doctor dropdown to select '{doctor_name}'....")
+        doctor_dropdown_element = self.wait.until(EC.visibility_of_element_located(self.doctor_list_select))
+        select = Select(doctor_dropdown_element)
+        select.select_by_visible_text(doctor_name)
+        print(f"Doctor {doctor_name}' selected successfully.")
+
+
     #------------------- Actions -------------------------
     def create_appointment(self):
         patient_name = generate_random_name()
@@ -43,11 +65,9 @@ class Appointmentpage(BasePage):
         self.click(self.gender)
         self.enter_text(self.age, 25)
         self.click(self.add_create_bill)
-        self.click(self.select_service)
-        self.click(self.service_selection)
+        self.select_service_by_name("First Consultation - [1234]")
         self.click(self.add_button)
-        self.click(self.doctor_list)
-        self.click(self.doctor_name)
+        self.select_doctor_by_name("Dr Bose")
         self.click(self.con_button)
         self.click(self.create_bill)
         self.click(self.pay_bill)

@@ -1,9 +1,11 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
 
 from PageObjects.base_page import BasePage
 
 class ModulesNavigation(BasePage):
-    Appointments_nav = (By.XPATH, "//i[@class='hx_calendar-date']")
+    Appointments_nav = (By.XPATH, '//*[@id="root"]/header/div[1]/div[1]/div[2]/a[1]/div/div/div')
     Consults_nav = (By.XPATH, "//i[@class='hx_people']")
     Tele_consults_nav = (By.XPATH,"//i[@class='hx_video-filled']")
     Menu_icon_nav = (By.XPATH, "//i[@class='hx_f-menu emr3tw-text-5']")
@@ -13,7 +15,7 @@ class ModulesNavigation(BasePage):
     Pharmacy_nav = (By.XPATH, '//*[@id="root"]/header/div[1]/div[2]/div[8]/div/div[7]/div')
 
     def Navigate_appointment_page(self):
-        self.click(self.Appointments_nav)
+        self.wait.until(EC.element_to_be_clickable(self.Appointments_nav)).click()
 
     def Navigate_consutls_page(self):
         self.click(self.Consults_nav)

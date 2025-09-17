@@ -17,7 +17,6 @@ def test_002_appointments_creation(setup):
     login_page.login()
     logger.info("Logged in successfully")
     # ------------------ Navigation to appointment ------------------
-    driver.implicitly_wait(5)
     nav = ModulesNavigation(driver)
     nav.Navigate_appointment_page()
     logger.info("Navigated to appointment")

@@ -1,3 +1,4 @@
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -22,3 +23,13 @@ class BasePage:
             return element.is_displayed()
         except:
             return False
+
+    def select_dropdown_by_visible_text(self, locator, text):
+        try:
+            element = self.driver.find_element(*locator)
+            dropdown = Select(element)
+            dropdown.select_by_visible_text(text)
+            print(f"Successfully selected '{text}' from dropdown with locator {locator}")
+        except Exception as e:
+            print(f"Error selecting option '{text}' from dropdown with locator {locator}: {e}")
+            raise

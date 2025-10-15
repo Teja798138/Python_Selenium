@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","15378","test__004_visitpad","TestCases","2025-09-28","broken","2025-09-28","","test_visit_pad","",""
+"","14934","test_002_appointments_creation","TestCases","2025-09-28","broken","2025-09-28","","test_appointments","",""
+"","3846","test_001_homePageTitle","TestCases","2025-09-28","passed","2025-09-28","","test_login","",""

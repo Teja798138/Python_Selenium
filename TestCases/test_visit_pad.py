@@ -13,6 +13,6 @@ def test__004_visitpad(setup):
     login_page = LoginPage(driver)
     login_page.login()
     #----------- Patient search ---------------
-
     vp = Visit_pad(driver)
     vp.search_patient()
+    vp.visit_pad_test()

@@ -1,0 +1,2 @@
+[32mINFO    [0m AutomationLogger:test_appointments.py:18 Logged in successfully
+[32mINFO    [0m AutomationLogger:test_appointments.py:22 Navigated to appointment

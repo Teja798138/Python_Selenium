@@ -1,0 +1,2 @@
+[32mINFO    [0m AutomationLogger:test_login.py:13 Starting test: Login is attempting
+[32mINFO    [0m AutomationLogger:test_login.py:15 Successfully logged in

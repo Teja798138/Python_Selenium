@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 from Utilities.readproperties import ReadConfig
 
-@pytest.fixture()
+@pytest.fixture(autouse=True)
 def setup():
     driver = webdriver.Chrome()
     driver.maximize_window()

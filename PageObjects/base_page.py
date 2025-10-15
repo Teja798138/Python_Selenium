@@ -13,11 +13,15 @@ class BasePage:
     def click(self, locator):
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
+    def click_with_js(self, locator):
+        element = self.wait.until(EC.presence_of_element_located(locator))
+        self.driver.execute_script("arguments[0].click();", element)
+
+
     def enter_text(self, locator, text):
-        self.wait.until(EC.visibility_of_element_located(locator)).send_keys(text)
+        self.wait.until(EC.presence_of_element_located(locator)).send_keys(text)
 
     def is_displayed(self, locator):
-        """Check if element is displayed"""
         try:
             element = self.wait.until(EC.presence_of_element_located(locator))
             return element.is_displayed()
@@ -33,3 +37,8 @@ class BasePage:
         except Exception as e:
             print(f"Error selecting option '{text}' from dropdown with locator {locator}: {e}")
             raise
+
+    def switch_to_frame(self, locator):
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it(locator))
+
+

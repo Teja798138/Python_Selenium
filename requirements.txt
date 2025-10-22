@@ -1,0 +1,12 @@
+pytest
+selenium
+allure-pytest
+allure-python-commons
+allure-reporter
+openpyxl
+faker
+pytest-dependency
+pytest-html
+pytest-order
+pytest-xdist
+requests

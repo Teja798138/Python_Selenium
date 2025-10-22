@@ -1,4 +1,5 @@
 import pytest
+from pytest_dependency import depends
 from PageObjects.LoginPage import LoginPage
 from PageObjects.Modules_navigation import ModulesNavigation
 from PageObjects.appointment_page import Appointmentpage
@@ -12,9 +13,9 @@ logger = Logger.setup_logger()
 def test_002_appointments_creation(setup):
     #---------- driver Invoke ---------------------
     driver = setup
-    #---------- Login code ------------------------
+    #---------- Login code -------------------------
     login_page = LoginPage(driver)
-    login_page.login()
+    login_page.login_check()
     logger.info("Logged in successfully")
     # ------------------ Navigation to appointment ------------------
     nav = ModulesNavigation(driver)

@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from PageObjects.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
@@ -6,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class Visit_pad(BasePage):
     #------ Locators for patient search -----------------------------------
     custom_patient_search = (By.XPATH, '//input[@placeholder="Search Patient  🔍"]')
-    select_patient_name = (By.XPATH, '//*[@id="searchResult"]/div[2]/div[2]/div')
+    filtered_patient = (By.XPATH, '//*[@id="searchResult"]/div[2]/div[2]/div/div[1]')
     visit_pad_page_confirm = '//*[@id="react_emr_mfe_patient_header"]/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[1]/div'
     vital1_select = (By.XPATH,'//*[@id="react_emr_mfe_body_container"]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div/div[2]/div/input')
     vital2_select = (By.XPATH, '//*[@id="react_emr_mfe_body_container"]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[3]/div/div[2]/div/input')
@@ -18,9 +20,9 @@ class Visit_pad(BasePage):
     def search_patient(self):
         self.wait.until(EC.presence_of_element_located(self.custom_patient_search))
         self.click(self.custom_patient_search)
+        time.sleep(5)
         self.enter_text(self.custom_patient_search, "teststss")
-        self.wait.until(EC.element_to_be_clickable(self.select_patient_name))
-        self.click(self.select_patient_name)
+        self.click(self.filtered_patient)
         print("Patient Name was clicked from search bar")
 
     def visit_pad_test(self):

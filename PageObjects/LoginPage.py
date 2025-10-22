@@ -9,11 +9,17 @@ class LoginPage(BasePage):
     login_button = (By.XPATH, "//*[@id='loginButton']")
     branch = (By.XPATH, "//input[@id='btn_submit']")
 
-    def login(self):
+    def login_check(self):
         self.enter_text(self.Email_textbox_id, ReadConfig.getUseremail())
         self.enter_text(self.Password_textbox_id, ReadConfig.getPassword())
         self.click(self.login_button)
         self.click(self.branch)
+
+    def login_validations(self, username, password):
+        self.enter_text(self.Email_textbox_id, username)
+        self.enter_text(self.Password_textbox_id, password)
+        self.click(self.login_button)
+
 
 
 

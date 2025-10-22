@@ -17,7 +17,6 @@ class BasePage:
         element = self.wait.until(EC.presence_of_element_located(locator))
         self.driver.execute_script("arguments[0].click();", element)
 
-
     def enter_text(self, locator, text):
         self.wait.until(EC.presence_of_element_located(locator)).send_keys(text)
 

@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        RECIPIENTS = 'tejadigitalworld@gmail.com' // <-- change this to your email list (comma-separated)
+        RECIPIENTS = 'voduritejaqa@gmail.com' // <-- change this to your email list (comma-separated)
         ALLURE_RESULTS = 'allure-results'
         ALLURE_REPORT = 'allure-report'
     }

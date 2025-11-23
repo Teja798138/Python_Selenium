@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.9-slim'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     environment {
         RECIPIENTS = 'tejadigitalworld@gmail.com' // <-- change this to your email list (comma-separated)
         ALLURE_RESULTS = 'allure-results'
@@ -16,17 +11,17 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Install Dependencies') {
+        stage('Run Tests inside Docker') {
             steps {
-                // Install python deps (ensure allure-pytest is in requirements or install explicitly)
-                sh 'pip install -r requirements.txt'
-            }
-        }
-        stage('Run Tests (collect Allure results)') {
-            steps {
-                // Run tests and collect allure results. Adjust command if you use a custom test runner.
-                // If you do not use pytest, update this to your test command that writes to ${ALLURE_RESULTS}.
-                sh 'pytest --alluredir=${ALLURE_RESULTS} || true'
+                // Runs tests inside the official python docker image using the host's docker daemon.
+                // The Jenkins agent must have Docker installed and permission to run it.
+                sh '''
+                  docker run --rm \
+                    -v ${WORKSPACE}:${WORKSPACE} \
+                    -w ${WORKSPACE} \
+                    python:3.9-slim \
+                    bash -lc "pip install -r requirements.txt && pytest --alluredir=${ALLURE_RESULTS} || true"
+                '''
             }
         }
         stage('Publish Allure Report') {

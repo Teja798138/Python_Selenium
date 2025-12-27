@@ -6,10 +6,16 @@ class ReadConfig:
     @staticmethod
     def _load_config():
         if ReadConfig._config_data is None:
-            current_dir = os.path.dirname(__file__)
+            current_dir = os.path.dirname(os.path.abspath(__file__))
             config_path = os.path.join(current_dir, "config.json")
-            with open(config_path, "r") as f:
-                ReadConfig._config_data = json.load(f)
+            if not os.path.exists(config_path):
+                raise FileNotFoundError(f"Configuration file not found at {config_path}")
+
+            try:
+                with open(config_path, "r", encoding="utf-8") as file:
+                    ReadConfig._config_data = json.load(file)
+            except json.JSONDecodeError as e:
+                raise ValueError(f"Error parsing JSON configuration file: {e}")
         return ReadConfig._config_data
 
     @staticmethod
